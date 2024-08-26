@@ -84,7 +84,14 @@ $ git clone https://github.com/buildroot/buildroot
 $ cd buildroot
 $ git checkout 9b911c8
 $ make spike_riscv64_defconfig
-$ make menuconfig # disable F extension
+$ make menuconfig
+# Disable the F extension option since it is not supported.
+# Target options -> Target Architecture Variant -> [Select "Custom architecture"]
+# Target options -> [Disable "Single-precision Floating-point (F)"]
+#
+# If the change is successful, the following parameters in .config will be set to "n".
+# BR2_RISCV_ISA_RVF=n
+
 $ make -j $(nproc)
 $ ./carron --release -- --kernel /path/to/Image --initrd /path/to/rootfs.cpio /path/to/fw_jump.elf
 In file /home/takana/riscv-toolchain/buildroot/output/images/fw_jump.elf
